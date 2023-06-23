@@ -93,7 +93,8 @@ namespace audio_dataset_screener
             }
             wmp.Ctlcontrols.play();
             timerPlay.Start();//进度条开始走动
-;        }
+            ;
+        }
         private void wmp_pause()
         {
             timerSleep.Stop();//取消已进入延时等待的切换下一条操作
@@ -215,7 +216,7 @@ namespace audio_dataset_screener
 
             clear_filelist();
 
-            if(projectData.Labels != null)//读取工程文件中的分类目录设置
+            if (projectData.Labels != null)//读取工程文件中的分类目录设置
             {
                 if (projectData.Labels.Count > 5)
                 {
@@ -230,7 +231,7 @@ namespace audio_dataset_screener
                     }
                 }
             }
-            if(projectData.Files != null)//读取工程文件中的文件列表
+            if (projectData.Files != null)//读取工程文件中的文件列表
             {
                 int total_amount = projectData.Files.Count;
                 int succeed_amount = 0;
@@ -253,13 +254,13 @@ namespace audio_dataset_screener
                             ListViewItem lvItem = new ListViewItem();
                             lvItem.SubItems[0].Text = string.Empty;
                             string label;//将工程文件中的label转换为文件列表中的动作标记
-                            if(file.Label == 0 | file.Label > 5 | file.Label < -1)//排除不需要动作标记的情况
+                            if (file.Label == 0 | file.Label > 5 | file.Label < -1)//排除不需要动作标记的情况
                             {
                                 label = string.Empty;
                             }
                             else
                             {
-                                if(file.Label == -1)
+                                if (file.Label == -1)
                                 {
                                     label = "删";
                                 }
@@ -294,7 +295,7 @@ namespace audio_dataset_screener
             {
                 return (0, 0);
             }
-            
+
         }
 
         private void save_to_json(string path)
@@ -340,7 +341,7 @@ namespace audio_dataset_screener
             }
         }
 
-        private (int,int) apply_actions<T>(T items) where T : ICollection //应用动作标记
+        private (int, int) apply_actions<T>(T items) where T : ICollection //应用动作标记
         {
             System.Windows.Forms.TextBox[] folder_paths = { txtboxSortFolder1, txtboxSortFolder2, txtboxSortFolder3, txtboxSortFolder4, txtboxSortFolder5 };
 
@@ -385,7 +386,7 @@ namespace audio_dataset_screener
                 }
                 processBar.PerformStep();
                 Application.DoEvents();
-                
+
             }
             processBar.Visible = false;
             this.Enabled = true;
@@ -403,7 +404,7 @@ namespace audio_dataset_screener
         {
             ctMenuProject.Show(btnProject, 0, btnProject.Height);
         }
-        
+
         private void toolStripMenuItemAddFile_Click(object sender, EventArgs e)
         {
             wmp_stop();
@@ -443,7 +444,7 @@ namespace audio_dataset_screener
             {
                 if (item.SubItems[1].Text != string.Empty)
                 {
-                    if (MessageBox.Show("还有未应用的筛选动作，打开工程会清空当前文件列表，确实要继续吗", "提示", MessageBoxButtons.YesNo,MessageBoxIcon.Question) != DialogResult.Yes)
+                    if (MessageBox.Show("还有未应用的筛选动作，打开工程会清空当前文件列表，确实要继续吗", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                     {
                         return;
                     }
@@ -473,7 +474,7 @@ namespace audio_dataset_screener
             SaveFileDialog saveFileDialogProject = new SaveFileDialog();
             saveFileDialogProject.DefaultExt = "json";
             saveFileDialogProject.Filter = "工程文件(*.json)|*.json";
-            if(saveFileDialogProject.ShowDialog() == DialogResult.OK)
+            if (saveFileDialogProject.ShowDialog() == DialogResult.OK)
             {
                 save_to_json(saveFileDialogProject.FileName);
             }
@@ -506,7 +507,7 @@ namespace audio_dataset_screener
         {
             if (lvFileList.SelectedItems.Count > 0)
             {
-                if(MessageBox.Show("确实要删除所选的音频（包括本地文件）吗？该操作不可撤销！", "删除确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                if (MessageBox.Show("确实要删除所选的音频（包括本地文件）吗？该操作不可撤销！", "删除确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 {
                     return;
                 }
@@ -557,7 +558,7 @@ namespace audio_dataset_screener
                 set_current_playing(lvFileList.SelectedItems[0].Index);
                 wmp_play();
             }
-            
+
         }
 
         private void lvFileList_ColumnClick(object sender, ColumnClickEventArgs e)//点击表头排序功能
@@ -576,7 +577,7 @@ namespace audio_dataset_screener
                     lvFileList.Sorting = SortOrder.Ascending;
             }
             lvFileList.Sort();
-            this.lvFileList.ListViewItemSorter = new ListViewItemComparer(e.Column,lvFileList.Sorting);
+            this.lvFileList.ListViewItemSorter = new ListViewItemComparer(e.Column, lvFileList.Sorting);
             set_current_playing(0);//排序后重置当前播放项
         }
         #endregion
@@ -584,14 +585,7 @@ namespace audio_dataset_screener
         #region 播放控制
         private void btnPlayPause_Click(object sender, EventArgs e) //播放暂停键
         {
-            if(wmp.playState.ToString()== "wmppsPlaying" | wmp.playState.ToString() == "wmppsScanForward")//有时wmp会自作聪明地把正在倍速播放的文件设为wmppsScanForward状态，麻了
-            {
-                    wmp_pause();
-            }
-            else
-            {
-                    wmp_play();
-            }
+
         }
 
 
@@ -666,7 +660,7 @@ namespace audio_dataset_screener
                     wmp_stop();
                 }
             }
-            
+
         }
         private void timerSleep_Tick(object sender, EventArgs e)
         {
@@ -774,9 +768,9 @@ namespace audio_dataset_screener
         }
         private void btnReplace_Click(object sender, EventArgs e)
         {
-            if(comboReplaceOri.SelectedIndex != -1 & comboReplaceDes.SelectedIndex != -1)//如果两个combobox都有选择
+            if (comboReplaceOri.SelectedIndex != -1 & comboReplaceDes.SelectedIndex != -1)//如果两个combobox都有选择
             {
-                if(comboReplaceDes.SelectedIndex < 5) //如果替换为分类标记
+                if (comboReplaceDes.SelectedIndex < 5) //如果替换为分类标记
                 {
                     System.Windows.Forms.TextBox[] folder_paths = { txtboxSortFolder1, txtboxSortFolder2, txtboxSortFolder3, txtboxSortFolder4, txtboxSortFolder5 };
                     if (folder_paths[comboReplaceDes.SelectedIndex].Text == string.Empty) //如果该分类标记未指定目录，则不响应
@@ -921,7 +915,7 @@ namespace audio_dataset_screener
                 e.Handled = true;
                 e.SuppressKeyPress = true;//防止发出Windows默认提示音
             }
-            
+
         }
         private void chkListAuto_CheckedChanged(object sender, EventArgs e)
         {
@@ -938,7 +932,7 @@ namespace audio_dataset_screener
         {
             foreach (ListViewItem item in lvFileList.Items)//判断是否还有未应用的动作
             {
-                if(item.SubItems[1].Text != string.Empty)
+                if (item.SubItems[1].Text != string.Empty)
                 {
                     if (MessageBox.Show("还有未执行的筛选动作，确实要退出程序吗", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
                     {
@@ -950,17 +944,23 @@ namespace audio_dataset_screener
                         return;//直接结束FormClosing事件方法，关闭窗口
                     }
                 }
-                
+
             }
-            
+
         }
 
-        private void labelAbout_Click(object sender, EventArgs e)
-        {
-            frmAbout frmAbout = new frmAbout();
-            frmAbout.ShowDialog();
-        }
         #endregion
 
+        private void frmMain_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (wmp.playState.ToString() == "wmppsPlaying" | wmp.playState.ToString() == "wmppsScanForward")//有时wmp会自作聪明地把正在倍速播放的文件设为wmppsScanForward状态，麻了
+            {
+                wmp_pause();
+            }
+            else
+            {
+                wmp_play();
+            }
+        }
     }
 }
